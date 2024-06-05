@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="apiFlow" doc:id="af654b25-c279-4095-933e-0a7bbcade14f" >
+		<http:listener doc:name="[GET] /data" doc:id="ab768806-6e3e-4997-9dc4-cf6fa368c6ad" config-ref="HTTP_Listener_config" path="/data" allowedMethods="GET"/>
+		<ee:transform doc:name="Transform Message" doc:id="e4db1603-e182-4a85-99a2-aa1d6e8ca76f" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+[
+	{
+		"id": uuid(),
+		"correlationId": correlationId,
+		"firstName": "Thiago",
+		"lastName": "Santos",
+		"position": "Sr. Technical Architect",
+		"company": "Salesforce"
+	},
+	{
+		"id": uuid(),
+		"correlationId": correlationId,
+		"firstName": "Lucas",
+		"lastName": "Gong",
+		"position": "Customer Success Manager",
+		"company": "Salesforce"
+	},
+	{
+		"id": uuid(),
+		"correlationId": correlationId,
+		"firstName": "Shivi",
+		"lastName": "Agarwal",
+		"position": "Customer Success Manager",
+		"company": "Salesforce"
+	}
+]]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
